@@ -23,6 +23,7 @@ class AppKernel extends Kernel
             // KunstmaanAdminBundle
             new FOS\UserBundle\FOSUserBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+            new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new Kunstmaan\AdminBundle\KunstmaanAdminBundle(),
             // KunstmaanMediaBundle
             new Liip\ImagineBundle\LiipImagineBundle(),

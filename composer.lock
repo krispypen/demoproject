@@ -58,6 +58,18 @@
             "commit-date": "1345146070"
         },
         {
+            "package": "gedmo/doctrine-extensions",
+            "version": "dev-master",
+            "alias-pretty-version": "2.3.x-dev",
+            "alias-version": "2.3.9999999.9999999-dev"
+        },
+        {
+            "package": "gedmo/doctrine-extensions",
+            "version": "dev-master",
+            "source-reference": "9bb455ba52d223a47323f4c5832635ccc328f630",
+            "commit-date": "1344437232"
+        },
+        {
             "package": "imagine/Imagine",
             "version": "v0.2.8"
         },
@@ -154,14 +166,14 @@
         {
             "package": "kunstmaan/adminnode-bundle",
             "version": "2.0.x-dev",
-            "source-reference": "a7237dd601d262741b1588975df488e5f419e0f8",
-            "commit-date": "1344589340"
+            "source-reference": "0437f4ec2a2d055c5b41d7fad19fcc5e79087384",
+            "commit-date": "1345216691"
         },
         {
             "package": "kunstmaan/form-bundle",
             "version": "2.0.x-dev",
-            "source-reference": "700ccdb25f12d136d49be9900a4c7f10c5bad2bf",
-            "commit-date": "1344255923"
+            "source-reference": "481e1729b85b5d86ef371e8838646d4a92e85b7a",
+            "commit-date": "1345216731"
         },
         {
             "package": "kunstmaan/generator-bundle",

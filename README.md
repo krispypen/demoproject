@@ -1,174 +1,327 @@
-Symfony Standard Edition
-========================
+# Setting up the project using kDeploy
 
-Welcome to the Symfony Standard Edition - a fully-functional Symfony2
-application that you can use as the skeleton for your new applications.
+First we create the new project with kDeploy. If you don't use kDeploy skip this section.
 
-This document contains information on how to download, install, and start
-using Symfony. For a more detailed explanation, see the [Installation][1]
-chapter of the Symfony Documentation.
+```bash
+sudo -i
+cd /opt/kDeploy/tools
+python newproject.py demoproject
+```
 
-1) Installing the Standard Edition
-----------------------------------
+and we configure it for Symfony usage
 
-When it comes to installing the Symfony Standard Edition, you have the
-following options.
+```bash
+python applyskel.py demoproject symfony
+```
 
-### Use Composer (*recommended*)
+At this time it installs v2.0.16 and we want to work with 2.1 so we delete the files installed.
 
-As Symfony uses [Composer][2] to manage its dependencies, the recommended way
-to create a new project is to use it.
+```bash
+rm -Rf /home/projects/demoproject/data/demoproject/*
+```
 
-If you don't have Composer yet, download it following the instructions on
-http://getcomposer.org/ or just run the following command:
+Run fixperms and maintenance
 
-    curl -s http://getcomposer.org/installer | php
+```bash
+python fixperms.py demoproject
+python maintenance quick
+apachectl restart
+exit
+```
 
-Then, use the `create-project` command to generate a new Symfony application:
+# Basic project structure using Composer
 
-    php composer.phar create-project symfony/framework-standard-edition path/to/install
+Next up, basic project structure using Composer
 
-Composer will install Symfony and all its dependencies under the
-`path/to/install` directory.
+```bash
+cd /home/projects/demoproject/data/
+rm -Rf demoproject/
+curl -s http://getcomposer.org/installer | php
+php composer.phar create-project symfony/framework-standard-edition ./demoproject
+mv composer.phar ./demoproject/
+cd demoproject
+```
 
-### Download an Archive File
+While Symfony 2.1 is not final yet, make sure you have the latest versions
 
-To quickly test Symfony, you can also download an [archive][3] of the Standard
-Edition and unpack it somewhere under your web server root directory.
+```bash
+git checkout master
+php composer.phar update
+```
 
-If you downloaded an archive "without vendors", you also need to install all
-the necessary dependencies. Download composer (see above) and run the
-following command:
+# Cleaning out the Acme bundle
 
-    php composer.phar install
+```bash
+rm -Rf src/Acme/
+grep -v "Acme" app/AppKernel.php > app/AppKernel.php.tmp
+mv app/AppKernel.php.tmp app/AppKernel.php
+grep "wdt\|profiler\|configurator\|main\|routing" app/config/routing_dev.yml > app/config/routing_dev.yml.tmp
+mv app/config/routing_dev.yml.tmp app/config/routing_dev.yml
+rm -Rf web/bundles/acmedemo
+```
 
-2) Checking your System Configuration
--------------------------------------
+# Configure your application
 
-Before starting coding, make sure that your local system is properly
-configured for Symfony.
+Configure your application by surfing to http://computername/config.php and ake sure parameters.yml or .ini is not readable in git.
 
-Execute the `check.php` script from the command line:
+```bash
+echo "app/config/parameters.yml" >> .gitignore
+echo "$(curl -fsSL https://raw.github.com/gist/c1125c1f97c76dd6cf99/param)" > param
+chmod a+x param
+./param encode
+```
 
-    php app/check.php
+# Add the project to git
 
-Access the `config.php` script from a browser:
+```bash
+echo ".idea" >> .gitignore
+rm -Rf .git
+git init
+git add .
+git commit -a -m "Symfony base install"
+```
 
-    http://localhost/path/to/symfony/app/web/config.php
+# Adding bundles
 
-If you get any warnings or recommendations, fix them before moving on.
+Add the following to your composer.json and run ```php composer.phar update``
 
-3) Browsing the Demo Application
---------------------------------
+```json
+        "kunstmaan/admin-bundle": "2.0.x-dev",
+        "kunstmaan/media-bundle": "2.0.x-dev",
+        "kunstmaan/pagepart-bundle": "2.0.x-dev",
+        "kunstmaan/media-pagepart-bundle": "2.0.x-dev",
+        "kunstmaan/form-bundle": "2.0.x-dev",
+        "kunstmaan/adminlist-bundle": "2.0.x-dev",
+        "kunstmaan/adminnode-bundle": "2.0.x-dev",
+        "kunstmaan/view-bundle": "2.0.x-dev",
+        "kunstmaan/search-bundle": "2.0.x-dev",
+        "kunstmaan/generator-bundle": "2.0.x-dev",
+        "kunstmaan/sentry-bundle": "dev-master",
+        "liip/monitor-bundle": "dev-master",
+        "liip/monitor-extra-bundle": "dev-master",
+        "liip/cache-control-bundle": "dev-master"
+```
 
-Congratulations! You're now ready to use Symfony.
+and the following to AppKernel.php
 
-From the `config.php` page, click the "Bypass configuration and go to the
-Welcome page" link to load up your first Symfony page.
+```php
+            // KunstmaanAdminBundle
+            new FOS\UserBundle\FOSUserBundle(),
+            new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+            new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
+            new Kunstmaan\AdminBundle\KunstmaanAdminBundle(),
+            // KunstmaanMediaBundle
+            new Liip\ImagineBundle\LiipImagineBundle(),
+            new Knp\Bundle\GaufretteBundle\KnpGaufretteBundle(),
+            new Kunstmaan\MediaBundle\KunstmaanMediaBundle(),
+            // KunstmaanPagePartBundle
+            new Kunstmaan\PagePartBundle\KunstmaanPagePartBundle(),
+            // KunstmaanMediaPagePartBundle
+            new Kunstmaan\MediaPagePartBundle\KunstmaanMediaPagePartBundle(),
+            // KunstmaanFormBundle
+            new Kunstmaan\FormBundle\KunstmaanFormBundle(),
+            // KunstmaanAdminListBundle
+            new Kunstmaan\AdminListBundle\KunstmaanAdminListBundle(),
+            // KunstmaanAdminNodeBundle
+            new Kunstmaan\AdminNodeBundle\KunstmaanAdminNodeBundle(),
+            // KunstmaanViewBundle
+            new Kunstmaan\ViewBundle\KunstmaanViewBundle(),
+            // KunstmaanSearchBundle
+            new FOQ\ElasticaBundle\FOQElasticaBundle(),
+            new Kunstmaan\SearchBundle\KunstmaanSearchBundle(),
+            // KunstmaanGeneratorBundle
+            new Kunstmaan\GeneratorBundle\KunstmaanGeneratorBundle(),
+            // KunstmaanSentryBundle
+            new Kunstmaan\SentryBundle\KunstmaanSentryBundle(),
+            // LiipMonitorBundle & LiipMonitorExtraBundle
+            new Liip\MonitorBundle\LiipMonitorBundle(),
+            new Liip\MonitorExtraBundle\LiipMonitorExtraBundle(),
+            // LiipCacheControlBundle
+            new Liip\CacheControlBundle\LiipCacheControlBundle(),
+```
 
-You can also use a web-based configurator by clicking on the "Configure your
-Symfony Application online" link of the `config.php` page.
+parameters.yml
 
-To see a real-live Symfony page in action, access the following page:
+```yaml
+    # KunstmaanSearchBundle
+    searchport: 9200
+    searchindexname: demoproject
+    # KunstmaanSentryBundle
+    sentry.dsn: https://5f267019e884404c9ad6f600562ecae8:2ac17b2abef44446a92742e940002a0c@app.getsentry.com/2067
+    # KunstmaanMediaBundle
+    cdnpath: ""
+    # KunstmaanViewBundle
+    requiredlocales: "nl|fr|de|en"
+    defaultlocale: "nl"
+    # KunstmaanAdminBundle
+    websitetitle: "Demoproject"
+ ```
 
-    web/app_dev.php/demo/hello/Fabien
+routing.yml
 
-4) Getting started with Symfony
--------------------------------
+```yaml
+# LiipMonitorBundle
+_monitor:
+    resource: "@LiipMonitorBundle/Resources/config/routing.yml"
+    prefix: /monitor/health
 
-This distribution is meant to be the starting point for your Symfony
-applications, but it also contains some sample code that you can learn from
-and play with.
+# KunstmaanMediaBundle
+_imagine:
+    resource: .
+    type:     imagine
 
-A great way to start learning Symfony is via the [Quick Tour][4], which will
-take you through all the basic features of Symfony2.
+KunstmaanMediaBundle:
+    resource: "@KunstmaanMediaBundle/Resources/config/routing.yml"
+    prefix:   /
 
-Once you're feeling good, you can move onto reading the official
-[Symfony2 book][5].
+# KunstmaanAdminBundle
+KunstmaanAdminBundle:
+    resource: "@KunstmaanAdminBundle/Resources/config/routing.yml"
+    prefix:   /
 
-A default bundle, `AcmeDemoBundle`, shows you Symfony2 in action. After
-playing with it, you can remove it by following these steps:
+# KunstmaanAdminNodeBundle
+KunstmaanAdminNodeBundle:
+    resource: "@KunstmaanAdminNodeBundle/Resources/config/routing.yml"
+    prefix:   /
 
-  * delete the `src/Acme` directory;
+# KunstmaanPagePartBundle
+KunstmaanPagePartBundle:
+    resource: "@KunstmaanPagePartBundle/Resources/config/routing.yml"
+    prefix:   /
 
-  * remove the routing entries referencing AcmeBundle in
-    `app/config/routing_dev.yml`;
+# KunstmaanFormBundle
+KunstmaanFormBundle:
+    resource: "@KunstmaanFormBundle/Resources/config/routing.yml"
+    prefix:   /
 
-  * remove the AcmeBundle from the registered bundles in `app/AppKernel.php`;
+# KunstmaanViewBundle
+KunstmaanViewBundle_slug:
+    resource: "@KunstmaanViewBundle/Controller/SlugController.php"
+    type:     annotation
+    prefix:   /
+```
 
-  * remove the `web/bundles/acmedemo` directory;
+config.yml
 
-  * remove the `security.providers`, `security.firewalls.login` and
-    `security.firewalls.secured_area` entries in the `security.yml` file or
-    tweak the security configuration to fit your needs.
+```yaml
+imports:
+    - { resource: @KunstmaanMediaBundle/Resources/config/config.yml }
+    - { resource: @KunstmaanAdminBundle/Resources/config/config.yml }
+    - { resource: @KunstmaanFormBundle/Resources/config/config.yml }
+    - { resource: @KunstmaanSearchBundle/Resources/config/config.yml }
+    - { resource: @KunstmaanAdminListBundle/Resources/config/config.yml }
+```
 
-What's inside?
----------------
+uncomment the translator in framework
 
-The Symfony Standard Edition is configured with the following defaults:
+```yaml
+framework:
+    translator:      { fallback: %locale% }
+```
 
-  * Twig is the only configured template engine;
+add these to twig
 
-  * Doctrine ORM/DBAL is configured;
+```yaml
+    globals:
+        websitetitle: %websitetitle%
+        defaultlocale: %defaultlocale%
+        requiredlocales: %requiredlocales%
+```
 
-  * Swiftmailer is configured;
+update the assetic bundle statement to include the admin bundle
 
-  * Annotations for everything are enabled.
+```yaml
+    bundles:        [ "KunstmaanAdminBundle" ]
+```
 
-It comes pre-configured with the following bundles:
+and update the orm statement to look like
 
-  * **FrameworkBundle** - The core Symfony framework bundle
+```yaml
+    orm:
+        auto_generate_proxy_classes: %kernel.debug%
+        entity_managers:
+            default:
+                auto_mapping: true
+                metadata_cache_driver: apc
+                result_cache_driver: apc
+                query_cache_driver: apc
+                mappings:
+                    gedmo_translatable:
+                        type: annotation
+                        prefix: Gedmo\Translatable\Entity
+                        dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Translatable/Entity"
+                        alias: GedmoTranslatable # this one is optional and will default to the name set for the mapping
+                        is_bundle: false
+                    gedmo_translator:
+                        type: annotation
+                        prefix: Gedmo\Translator\Entity
+                        dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Translator/Entity"
+                        alias: GedmoTranslator # this one is optional and will default to the name set for the mapping
+                        is_bundle: false
+                    gedmo_loggable:
+                        type: annotation
+                        prefix: Gedmo\Loggable\Entity
+                        dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Loggable/Entity"
+                        alias: GedmoLoggable # this one is optional and will default to the name set for the mapping
+                        is_bundle: false
+                    gedmo_tree:
+                        type: annotation
+                        prefix: Gedmo\Tree\Entity
+                        dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Tree/Entity"
+                        alias: GedmoTree # this one is optional and will default to the name set for the mapping
+                        is_bundle: false
+```
 
-  * [**SensioFrameworkExtraBundle**][6] - Adds several enhancements, including
-    template and routing annotation capability
+security.yml
 
-  * [**DoctrineBundle**][7] - Adds support for the Doctrine ORM
+```yaml
+jms_security_extra:
+    secure_all_services: false
+    expressions: true
 
-  * [**TwigBundle**][8] - Adds support for the Twig templating engine
+security:
+    encoders:
+        "FOS\UserBundle\Model\UserInterface": sha512
 
-  * [**SecurityBundle**][9] - Adds security by integrating Symfony's security
-    component
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+        ROLE_NEWS:        ROLE_USER
 
-  * [**SwiftmailerBundle**][10] - Adds support for Swiftmailer, a library for
-    sending emails
+    providers:
+        fos_userbundle:
+                id: fos_user.user_manager
 
-  * [**MonologBundle**][11] - Adds support for Monolog, a logging library
+    firewalls:
+        main:
+            pattern: .*
+            form_login:
+                login_path: fos_user_security_login
+                check_path: fos_user_security_check
+                provider: fos_userbundle
+            logout:
+              path:   fos_user_security_logout
+              target: KunstmaanAdminBundle_homepage
+            anonymous:    true
+            remember_me:
+                key:      0f9a62b0231d78a86b4e4a2f87bc032e95f44ebf
+                lifetime: 604800
+                path:     /
+                domain:   kunstmaan.be
 
-  * [**AsseticBundle**][12] - Adds support for Assetic, an asset processing
-    library
+        dev:
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            security: false
 
-  * [**JMSSecurityExtraBundle**][13] - Allows security to be added via
-    annotations
 
-  * [**JMSDiExtraBundle**][14] - Adds more powerful dependency injection
-    features
+    access_control:
+        - { path: ^/([^/]*)/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/([^/]*)/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/([^/]*)/admin/settings/, role: ROLE_ADMIN }
+        - { path: ^/([^/]*)/admin/settings, role: ROLE_ADMIN }
+        - { path: ^/([^/]*)/admin/, role: ROLE_ADMIN }
+        - { path: ^/([^/]*)/admin, role: ROLE_ADMIN }
+```
 
-  * **WebProfilerBundle** (in dev/test env) - Adds profiling functionality and
-    the web debug toolbar
+Run schema update and load fixtures
 
-  * **SensioDistributionBundle** (in dev/test env) - Adds functionality for
-    configuring and working with Symfony distributions
-
-  * [**SensioGeneratorBundle**][15] (in dev/test env) - Adds code generation
-    capabilities
-
-  * **AcmeDemoBundle** (in dev/test env) - A demo bundle with some example
-    code
-
-Enjoy!
-
-[1]:  http://symfony.com/doc/2.1/book/installation.html
-[2]:  http://getcomposer.org/
-[3]:  http://symfony.com/download
-[4]:  http://symfony.com/doc/2.1/quick_tour/the_big_picture.html
-[5]:  http://symfony.com/doc/2.1/index.html
-[6]:  http://symfony.com/doc/2.1/bundles/SensioFrameworkExtraBundle/index.html
-[7]:  http://symfony.com/doc/2.1/book/doctrine.html
-[8]:  http://symfony.com/doc/2.1/book/templating.html
-[9]:  http://symfony.com/doc/2.1/book/security.html
-[10]: http://symfony.com/doc/2.1/cookbook/email.html
-[11]: http://symfony.com/doc/2.1/cookbook/logging/monolog.html
-[12]: http://symfony.com/doc/2.1/cookbook/assetic/asset_management.html
-[13]: http://jmsyst.com/bundles/JMSSecurityExtraBundle/master
-[14]: http://jmsyst.com/bundles/JMSDiExtraBundle/master
-[15]: http://symfony.com/doc/2.1/bundles/SensioGeneratorBundle/index.html
