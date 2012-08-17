@@ -12,3 +12,33 @@ _monitor:
 _imagine:
     resource: .
     type:     imagine
+
+KunstmaanMediaBundle:
+    resource: "@KunstmaanMediaBundle/Resources/config/routing.yml"
+    prefix:   /
+
+# KunstmaanAdminBundle
+KunstmaanAdminBundle:
+    resource: "@KunstmaanAdminBundle/Resources/config/routing.yml"
+    prefix:   /
+
+# KunstmaanAdminNodeBundle
+KunstmaanAdminNodeBundle:
+    resource: "@KunstmaanAdminNodeBundle/Resources/config/routing.yml"
+    prefix:   /
+
+# KunstmaanPagePartBundle
+KunstmaanPagePartBundle:
+    resource: "@KunstmaanPagePartBundle/Resources/config/routing.yml"
+    prefix:   /
+
+# KunstmaanFormBundle
+KunstmaanFormBundle:
+    resource: "@KunstmaanFormBundle/Resources/config/routing.yml"
+    prefix:   /
+
+# KunstmaanViewBundle
+KunstmaanViewBundle_slug:
+    resource: "@KunstmaanViewBundle/Controller/SlugController.php"
+    type:     annotation
+    prefix:   /
