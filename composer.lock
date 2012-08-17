@@ -1,23 +1,33 @@
 {
-    "hash": "2c0ad4beaacc810752764681fc5067a8",
+    "hash": "d254f0951e090aa6a86f09804cd5e509",
     "packages": [
         {
+            "package": "ddeboer/data-import",
+            "version": "dev-master",
+            "source-reference": "6a15f5cfce699a210d46f72108f72f38cc8eec1d",
+            "commit-date": "1344588320"
+        },
+        {
+            "package": "ddeboer/data-import-bundle",
+            "version": "dev-master",
+            "source-reference": "8f42f54b702f0f98c679b3ba575c6b7e120e9146",
+            "commit-date": "1343312135"
+        },
+        {
             "package": "doctrine/common",
-            "version": "2.3.x-dev",
-            "source-reference": "2ec4bc6db13db6a0976a16b71058083c55cbcdbd",
-            "commit-date": "1343847076"
+            "version": "2.2.2"
+        },
+        {
+            "package": "doctrine/data-fixtures",
+            "version": "dev-master",
+            "source-reference": "779c3dfe446b6da893be87b908d6be28345d1e01",
+            "commit-date": "1341780535"
         },
         {
             "package": "doctrine/dbal",
-            "version": "2.3.x-dev",
-            "source-reference": "6470e2089e9ab4a2d24e6927ebe073b7935d7ed5",
-            "commit-date": "1344980709"
-        },
-        {
-            "package": "doctrine/doctrine-bundle",
-            "version": "dev-master",
-            "alias-pretty-version": "1.0.x-dev",
-            "alias-version": "1.0.9999999.9999999-dev"
+            "version": "2.2.x-dev",
+            "source-reference": "da4b7b4d965db0c1c1d23333e87ee5ae8994e249",
+            "commit-date": "1344978731"
         },
         {
             "package": "doctrine/doctrine-bundle",
@@ -26,10 +36,30 @@
             "commit-date": "1344549563"
         },
         {
+            "package": "doctrine/doctrine-fixtures-bundle",
+            "version": "v2.1.0-ALPHA"
+        },
+        {
             "package": "doctrine/orm",
-            "version": "2.3.x-dev",
-            "source-reference": "971865f271771a3b06c474dfea9e91f023837cce",
-            "commit-date": "1344977483"
+            "version": "2.2.x-dev",
+            "source-reference": "7d343302a8f886be9cfb2a9c8345a95740dcfde9",
+            "commit-date": "1343560954"
+        },
+        {
+            "package": "exercise/elastica-bundle",
+            "version": "dev-master",
+            "source-reference": "af468837a4765d33054025242a50762633cbe456",
+            "commit-date": "1344957638"
+        },
+        {
+            "package": "friendsofsymfony/user-bundle",
+            "version": "dev-master",
+            "source-reference": "4a9a399ca35de71504fcfe356b161b97b9980620",
+            "commit-date": "1345146070"
+        },
+        {
+            "package": "imagine/Imagine",
+            "version": "v0.2.8"
         },
         {
             "package": "jms/aop-bundle",
@@ -68,6 +98,36 @@
             "commit-date": "1345149984"
         },
         {
+            "package": "knplabs/gaufrette",
+            "version": "dev-master",
+            "source-reference": "e2382038d69dca517a3b8976a2de855da956ce12",
+            "commit-date": "1343735447"
+        },
+        {
+            "package": "knplabs/knp-gaufrette-bundle",
+            "version": "dev-master",
+            "source-reference": "ca477696cc87347aa2499843e3ebd23fabf118b7",
+            "commit-date": "1343910168"
+        },
+        {
+            "package": "knplabs/knp-menu",
+            "version": "dev-master",
+            "alias-pretty-version": "2.0.x-dev",
+            "alias-version": "2.0.9999999.9999999-dev"
+        },
+        {
+            "package": "knplabs/knp-menu",
+            "version": "dev-master",
+            "source-reference": "5b7d34e58c2d51b30005b69eeded9fb658fe8abf",
+            "commit-date": "1343985848"
+        },
+        {
+            "package": "knplabs/knp-menu-bundle",
+            "version": "dev-master",
+            "source-reference": "4389efdd5c30d974544afbfe5ada3a4ce30d7aa1",
+            "commit-date": "1344013797"
+        },
+        {
             "package": "kriswallsmith/assetic",
             "version": "dev-master",
             "alias-pretty-version": "1.1.x-dev",
@@ -80,14 +140,108 @@
             "commit-date": "1344507381"
         },
         {
+            "package": "kunstmaan/admin-bundle",
+            "version": "2.0.x-dev",
+            "source-reference": "a22016af4e07106c394ab721a3a246e904e3e621",
+            "commit-date": "1345207310"
+        },
+        {
+            "package": "kunstmaan/adminlist-bundle",
+            "version": "2.0.x-dev",
+            "source-reference": "4b00a68942059e9265d6a7e3d4a28b011038daf0",
+            "commit-date": "1344592758"
+        },
+        {
+            "package": "kunstmaan/adminnode-bundle",
+            "version": "2.0.x-dev",
+            "source-reference": "a7237dd601d262741b1588975df488e5f419e0f8",
+            "commit-date": "1344589340"
+        },
+        {
+            "package": "kunstmaan/form-bundle",
+            "version": "2.0.x-dev",
+            "source-reference": "700ccdb25f12d136d49be9900a4c7f10c5bad2bf",
+            "commit-date": "1344255923"
+        },
+        {
+            "package": "kunstmaan/generator-bundle",
+            "version": "2.0.x-dev",
+            "source-reference": "5d3c53a1c43f64475a0925510c80344b09535e67",
+            "commit-date": "1343921074"
+        },
+        {
+            "package": "kunstmaan/media-bundle",
+            "version": "2.0.x-dev",
+            "source-reference": "c434c035fcaf885e349363e6c41ce93a9dbbaf41",
+            "commit-date": "1345208765"
+        },
+        {
+            "package": "kunstmaan/media-pagepart-bundle",
+            "version": "2.0.x-dev",
+            "source-reference": "8895dd93325ee8ce04fb4b477fd1bbc8ea10a87f",
+            "commit-date": "1343851398"
+        },
+        {
+            "package": "kunstmaan/pagepart-bundle",
+            "version": "2.0.x-dev",
+            "source-reference": "722001a9befda05caec0bde417affedab9cc3052",
+            "commit-date": "1344589408"
+        },
+        {
+            "package": "kunstmaan/search-bundle",
+            "version": "2.0.x-dev",
+            "source-reference": "bfffedad2d7e9584801bcd9f13722dee0e586822",
+            "commit-date": "1343820433"
+        },
+        {
+            "package": "kunstmaan/sentry-bundle",
+            "version": "dev-master",
+            "source-reference": "14db9a3e096a9f3a38e53af150312043e5a8f9c3",
+            "commit-date": "1340887053"
+        },
+        {
+            "package": "kunstmaan/view-bundle",
+            "version": "2.0.x-dev",
+            "source-reference": "821a9ad1ad80b3134dbe9a2678e6b95e8d3b19d1",
+            "commit-date": "1343834889"
+        },
+        {
+            "package": "liip/cache-control-bundle",
+            "version": "dev-master",
+            "source-reference": "3d10d600675730280410472d8c1a2abf61c86787",
+            "commit-date": "1343665432"
+        },
+        {
+            "package": "liip/imagine-bundle",
+            "version": "dev-master",
+            "source-reference": "9e62043796b2206b6ea28c224ae40685dd8f81af",
+            "commit-date": "1345145521"
+        },
+        {
+            "package": "liip/monitor-bundle",
+            "version": "dev-master",
+            "source-reference": "f3aadf42ab6f8f7ee1ef8c55913b07c27389cb9c",
+            "commit-date": "1335079370"
+        },
+        {
+            "package": "liip/monitor-extra-bundle",
+            "version": "dev-master",
+            "source-reference": "c6476ff0915539bd2a9055d25e5e7c2269a09df9",
+            "commit-date": "1339444872"
+        },
+        {
             "package": "monolog/monolog",
             "version": "1.1.0"
         },
         {
-            "package": "sensio/distribution-bundle",
+            "package": "raven/raven",
             "version": "dev-master",
-            "alias-pretty-version": "2.1.x-dev",
-            "alias-version": "2.1.9999999.9999999-dev"
+            "source-reference": "78dcc1ac75963490d8a650511d8b57b6fdf785c4",
+            "commit-date": "1344535388"
+        },
+        {
+            "package": "ruflin/Elastica",
+            "version": "v0.19.3.0"
         },
         {
             "package": "sensio/distribution-bundle",
@@ -122,32 +276,14 @@
         {
             "package": "symfony/assetic-bundle",
             "version": "dev-master",
-            "alias-pretty-version": "2.1.x-dev",
-            "alias-version": "2.1.9999999.9999999-dev"
-        },
-        {
-            "package": "symfony/assetic-bundle",
-            "version": "dev-master",
             "source-reference": "ec3a65d3eab342af9e93a3c21af0ac7b78e01c17",
             "commit-date": "1344507386"
         },
         {
             "package": "symfony/monolog-bundle",
             "version": "dev-master",
-            "alias-pretty-version": "2.1.x-dev",
-            "alias-version": "2.1.9999999.9999999-dev"
-        },
-        {
-            "package": "symfony/monolog-bundle",
-            "version": "dev-master",
             "source-reference": "aed4d742838d2a7350633fed7afe18dbfd3415de",
             "commit-date": "1344949802"
-        },
-        {
-            "package": "symfony/swiftmailer-bundle",
-            "version": "dev-master",
-            "alias-pretty-version": "2.1.x-dev",
-            "alias-version": "2.1.9999999.9999999-dev"
         },
         {
             "package": "symfony/swiftmailer-bundle",
@@ -199,6 +335,20 @@
         "symfony/monolog-bundle": 20,
         "sensio/distribution-bundle": 20,
         "sensio/framework-extra-bundle": 20,
-        "sensio/generator-bundle": 20
+        "sensio/generator-bundle": 20,
+        "kunstmaan/admin-bundle": 20,
+        "kunstmaan/media-bundle": 20,
+        "kunstmaan/pagepart-bundle": 20,
+        "kunstmaan/media-pagepart-bundle": 20,
+        "kunstmaan/form-bundle": 20,
+        "kunstmaan/adminlist-bundle": 20,
+        "kunstmaan/adminnode-bundle": 20,
+        "kunstmaan/view-bundle": 20,
+        "kunstmaan/search-bundle": 20,
+        "kunstmaan/generator-bundle": 20,
+        "kunstmaan/sentry-bundle": 20,
+        "liip/monitor-bundle": 20,
+        "liip/monitor-extra-bundle": 20,
+        "liip/cache-control-bundle": 20
     }
 }

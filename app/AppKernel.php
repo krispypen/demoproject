@@ -19,6 +19,40 @@ class AppKernel extends Kernel
             new JMS\AopBundle\JMSAopBundle(),
             new JMS\DiExtraBundle\JMSDiExtraBundle($this),
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
+
+            // KunstmaanAdminBundle
+            new FOS\UserBundle\FOSUserBundle(),
+            new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+            new Kunstmaan\AdminBundle\KunstmaanAdminBundle(),
+            // KunstmaanMediaBundle
+            new Liip\ImagineBundle\LiipImagineBundle(),
+            new Knp\Bundle\GaufretteBundle\KnpGaufretteBundle(),
+            new Kunstmaan\MediaBundle\KunstmaanMediaBundle(),
+            // KunstmaanPagePartBundle
+            new Kunstmaan\PagePartBundle\KunstmaanPagePartBundle(),
+            // KunstmaanMediaPagePartBundle
+            new Kunstmaan\MediaPagePartBundle\KunstmaanMediaPagePartBundle(),
+            // KunstmaanFormBundle
+            new Kunstmaan\FormBundle\KunstmaanFormBundle(),
+            // KunstmaanAdminListBundle
+            new Kunstmaan\AdminListBundle\KunstmaanAdminListBundle(),
+            // KunstmaanAdminNodeBundle
+            new Kunstmaan\AdminNodeBundle\KunstmaanAdminNodeBundle(),
+            // KunstmaanViewBundle
+            new Kunstmaan\ViewBundle\KunstmaanViewBundle(),
+            // KunstmaanSearchBundle
+            new FOQ\ElasticaBundle\FOQElasticaBundle(),
+            new Kunstmaan\SearchBundle\KunstmaanSearchBundle(),
+            // KunstmaanGeneratorBundle
+            new Kunstmaan\GeneratorBundle\KunstmaanGeneratorBundle(),
+            // KunstmaanSentryBundle
+            new Kunstmaan\SentryBundle\KunstmaanSentryBundle(),
+            // LiipMonitorBundle & LiipMonitorExtraBundle
+            new Liip\MonitorBundle\LiipMonitorBundle(),
+            new Liip\MonitorExtraBundle\LiipMonitorExtraBundle(),
+            // LiipCacheControlBundle
+            new Liip\CacheControlBundle\LiipCacheControlBundle(),
+
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
