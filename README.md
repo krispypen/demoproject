@@ -24,7 +24,7 @@ Run fixperms and maintenance
 
 ```bash
 python fixperms.py demoproject
-python maintenance quick
+python maintenance.py quick
 apachectl restart
 exit
 ```
