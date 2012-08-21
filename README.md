@@ -35,7 +35,7 @@ Next up, basic project structure using Composer
 
 ```bash
 cd /home/projects/demoproject/data/
-rm -Rf demoproject/
+sudo rm -Rf demoproject/
 curl -s http://getcomposer.org/installer | php
 php composer.phar create-project symfony/framework-standard-edition ./demoproject
 mv composer.phar ./demoproject/
