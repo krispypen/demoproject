@@ -496,4 +496,4 @@ security:
         - { path: ^/([^/]*)/admin, role: ROLE_ADMIN }
 ```
 
-Run composer update, schema update and load fixtures
+Run composer update and fullreload
