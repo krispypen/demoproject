@@ -137,6 +137,7 @@ and the following to AppKernel.php
             // KunstmaanMediaBundle
             new Liip\ImagineBundle\LiipImagineBundle(),
             new Knp\Bundle\GaufretteBundle\KnpGaufretteBundle(),
+            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new Kunstmaan\MediaBundle\KunstmaanMediaBundle(),
             // KunstmaanPagePartBundle
             new Kunstmaan\PagePartBundle\KunstmaanPagePartBundle(),
@@ -164,7 +165,7 @@ and the following to AppKernel.php
             new Liip\CacheControlBundle\LiipCacheControlBundle(),
 ```
 
-parameters.yml
+app/config/parameters.yml (Don't forget to change db name, user, password and requiredlocales in this file)
 
 ```yaml
     # KunstmaanSearchBundle
@@ -181,8 +182,9 @@ parameters.yml
     websitetitle: "Demoproject"
  ```
 
-routing.yml
+app/config/routing.yml
 
+for a single-language-website:
 ```yaml
 # LiipMonitorBundle
 _monitor:
@@ -225,7 +227,63 @@ KunstmaanViewBundle_slug:
     prefix:   /
 ```
 
-config.yml
+for a multi-language-website:
+```yaml
+# LiipMonitorBundle
+_monitor:
+    resource: "@LiipMonitorBundle/Resources/config/routing.yml"
+    prefix: /monitor/health
+
+# KunstmaanMediaBundle
+_imagine:
+    resource: .
+    type:     imagine
+
+KunstmaanMediaBundle:
+    resource: "@KunstmaanMediaBundle/Resources/config/routing.yml"
+    prefix:   /{_locale}/
+    requirements:
+        _locale: %requiredlocales%
+
+# KunstmaanAdminBundle
+KunstmaanAdminBundle:
+    resource: "@KunstmaanAdminBundle/Resources/config/routing.yml"
+    prefix:   /{_locale}/
+    requirements:
+        _locale: %requiredlocales%
+
+# KunstmaanAdminNodeBundle
+KunstmaanAdminNodeBundle:
+    resource: "@KunstmaanAdminNodeBundle/Resources/config/routing.yml"
+    prefix:   /{_locale}/
+    requirements:
+        _locale: %requiredlocales%
+
+# KunstmaanPagePartBundle
+KunstmaanPagePartBundle:
+    resource: "@KunstmaanPagePartBundle/Resources/config/routing.yml"
+    prefix:   /{_locale}/
+    requirements:
+        _locale: %requiredlocales%
+
+# KunstmaanFormBundle
+KunstmaanFormBundle:
+    resource: "@KunstmaanFormBundle/Resources/config/routing.yml"
+    prefix:   /{_locale}/
+    requirements:
+        _locale: %requiredlocales%
+
+# KunstmaanViewBundle
+KunstmaanViewBundle_slug:
+    resource: "@KunstmaanViewBundle/Controller/SlugController.php"
+    type:     annotation
+    prefix:   /{_locale}/
+    requirements:
+        _locale: %requiredlocales%
+```
+
+
+app/config/config.yml
 
 ```yaml
 imports:
@@ -387,7 +445,7 @@ and update the orm statement to look like
                         is_bundle: false
 ```
 
-security.yml (Don't forget to change the firewall.main.remember_me.domain parameter)
+app/config/security.yml (Don't forget to change the firewall.main.remember_me.domain parameter)
 
 ```yaml
 jms_security_extra:
@@ -438,4 +496,4 @@ security:
         - { path: ^/([^/]*)/admin, role: ROLE_ADMIN }
 ```
 
-Run schema update and load fixtures
+Run composer update, schema update and load fixtures
