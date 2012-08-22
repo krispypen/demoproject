@@ -164,14 +164,14 @@ and the following to AppKernel.php
             new Liip\CacheControlBundle\LiipCacheControlBundle(),
 ```
 
-parameters.yml
+parameters.yml (Don't forget to change the searchindexname, sentry.dsn and websitetitle param)
 
 ```yaml
     # KunstmaanSearchBundle
     searchport: 9200
     searchindexname: demoproject
     # KunstmaanSentryBundle
-    sentry.dsn: https://5f267019e884404c9ad6f600562ecae8:2ac17b2abef44446a92742e940002a0c@app.getsentry.com/2067
+    sentry.dsn: https://XXXXXXXX:XXXXXXXX@app.getsentry.com/XXXX
     # KunstmaanMediaBundle
     cdnpath: ""
     # KunstmaanViewBundle
