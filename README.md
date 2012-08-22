@@ -71,6 +71,26 @@ chmod a+x param
 ./param encode
 ```
 
+# Use the apcClassLoader
+
+Comment out line 11 and 12 in web/app.php and change "sf2" into a unique name
+
+# Use AppCache when not behind a Varnish server:
+
+change this:
+
+```php
+//$kernel = new AppCache($kernel);
+```
+
+into this:
+
+```php
+if (!isset($_SERVER['HTTP_SURROGATE_CAPABILITY']) || false === strpos($_SERVER['HTTP_SURROGATE_CAPABILITY'], 'ESI/1.0')) {
+    $kernel = new AppCache($kernel);
+}
+```
+
 # Add the project to git
 
 ```bash
@@ -272,7 +292,7 @@ and update the orm statement to look like
                         is_bundle: false
 ```
 
-security.yml
+security.yml (Don't forget to change the firewall.main.remember_me.domain parameter)
 
 ```yaml
 jms_security_extra:
