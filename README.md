@@ -24,7 +24,7 @@ Run fixperms and maintenance
 
 ```bash
 python fixperms.py demoproject
-python maintenance quick
+python maintenance.py quick
 apachectl restart
 exit
 ```
@@ -35,7 +35,7 @@ Next up, basic project structure using Composer
 
 ```bash
 cd /home/projects/demoproject/data/
-rm -Rf demoproject/
+sudo rm -Rf demoproject/
 curl -s http://getcomposer.org/installer | php
 php composer.phar create-project symfony/framework-standard-edition ./demoproject
 mv composer.phar ./demoproject/
@@ -69,6 +69,30 @@ echo "app/config/parameters.yml" >> .gitignore
 echo "$(curl -fsSL https://raw.github.com/gist/c1125c1f97c76dd6cf99/param)" > param
 chmod a+x param
 ./param encode
+
+echo "$(curl -fsSL https://raw.github.com/gist/3423648/fullreload)" > fullreload
+chmod a+x fullreload
+
+```
+
+# Use the apcClassLoader
+
+Comment out line 11 and 12 in web/app.php and change "sf2" into a unique name
+
+# Use AppCache when not behind a Varnish server:
+
+change this:
+
+```php
+//$kernel = new AppCache($kernel);
+```
+
+into this:
+
+```php
+if (!isset($_SERVER['HTTP_SURROGATE_CAPABILITY']) || false === strpos($_SERVER['HTTP_SURROGATE_CAPABILITY'], 'ESI/1.0')) {
+    $kernel = new AppCache($kernel);
+}
 ```
 
 # Add the project to git
@@ -130,14 +154,14 @@ and the following to AppKernel.php
             new Liip\CacheControlBundle\LiipCacheControlBundle(),
 ```
 
-parameters.yml
+parameters.yml (Don't forget to change the searchindexname, sentry.dsn and websitetitle param)
 
 ```yaml
     # KunstmaanSearchBundle
     searchport: 9200
     searchindexname: demoproject
     # KunstmaanSentryBundle
-    sentry.dsn: https://5f267019e884404c9ad6f600562ecae8:2ac17b2abef44446a92742e940002a0c@app.getsentry.com/2067
+    sentry.dsn: https://XXXXXXXX:XXXXXXXX@app.getsentry.com/XXXX
     # KunstmaanMediaBundle
     cdnpath: ""
     # KunstmaanViewBundle
@@ -209,6 +233,94 @@ framework:
     translator:      { fallback: %locale% }
 ```
 
+add this to the framework config for easy switch to pdo sessions
+
+```yaml
+framework:
+    #storage_id: session.storage.pdo ## disabled because you need to manually create the table after fullreload. fix could be creating an entity for this table. see symfony.com/doc/current/cookbook/configuration/pdo_session_storage.html
+```
+
+add this to the main config:
+```yaml
+parameters:
+    #pdo.db_options:
+    # db_table: session
+    # db_id_col: session_id
+    # db_data_col: session_value
+    # db_time_col: session_time
+    
+stof_doctrine_extensions:
+    default_locale: nl
+    translation_fallback: true
+    orm:
+        default:
+           loggable: true
+           translatable: true
+           sluggable: true
+
+liip_imagine:
+    cache_prefix: uploads/cache
+    driver: imagick
+    #cache: no_cache
+    filter_sets:
+        thumb_image_block_1:
+            quality: 75
+            filters:
+                thumbnail: { size: [310, 229], mode: outbound }
+        thumb_image_block_2:
+            quality: 75
+            filters:
+                thumbnail: { size: [630, 229], mode: outbound }
+
+liip_cache_control:
+    rules:
+        - { path: /admin, controls: { private: true}, vary: [Accept-Encoding] }
+        - { path: ^/_internal, controls: {private: true, max_age: 0} }
+        - { path: ^/(.+), controls: { public: true, max_age: 120, s_maxage: 240 }, vary: [Accept-Encoding,Cookie] }
+
+services:
+    twig.extension.text:
+       class: Twig_Extensions_Extension_Text
+       tags:
+           - { name: twig.extension }
+
+    monitor.check.deps_entries:
+        class: Liip\MonitorExtraBundle\Check\DepsEntriesCheck
+        arguments:
+            - %kernel.root_dir%
+        tags:
+            - { name: monitor.check }
+
+    monitor.check.symfony_version:
+        class: Liip\MonitorExtraBundle\Check\SymfonyVersionCheck
+        tags:
+            - { name: monitor.check }
+
+    #pdo:
+    # class: PDO
+    # arguments:
+    # - "mysql:dbname=%database_name%"
+    # - %database_user%
+    # - %database_password%
+
+    #session.storage.pdo:
+    # class: Symfony\Component\HttpFoundation\SessionStorage\PdoSessionStorage
+    # arguments: [@pdo, %session.storage.options%, %pdo.db_options%]
+
+    kunstmaan_logging_introspection:
+        class: Monolog\Processor\IntrospectionProcessor
+        tags:
+            - { name: monolog.processor }
+
+    kunstmaan_logging_web:
+        class: Symfony\Bridge\Monolog\Processor\WebProcessor
+        tags:
+            - { name: monolog.processor }
+
+    kunstmaan_logging_formatter:
+        class: Monolog\Formatter\LineFormatter
+```
+
 add these to twig
 
 ```yaml
@@ -216,6 +328,9 @@ add these to twig
         websitetitle: %websitetitle%
         defaultlocale: %defaultlocale%
         requiredlocales: %requiredlocales%
+        #titlecolor: "#000000"
+        #titlebgcolor: "#F53111"
+        #ga_code: %ga_code% ## don't forget to specify this parameter in parameters.yml
 ```
 
 update the assetic bundle statement to include the admin bundle
@@ -262,7 +377,7 @@ and update the orm statement to look like
                         is_bundle: false
 ```
 
-security.yml
+security.yml (Don't forget to change the firewall.main.remember_me.domain parameter)
 
 ```yaml
 jms_security_extra:
@@ -314,4 +429,3 @@ security:
 ```
 
 Run schema update and load fixtures
-
