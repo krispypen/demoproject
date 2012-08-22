@@ -418,7 +418,7 @@ Run schema update and load fixtures
 
 # Script for completely reloading db, cache and assets:
 
-fullreload.sh
+fullreload
 ```bash
 #!/bin/sh
 sudo chmod -R 777 app/cache/
