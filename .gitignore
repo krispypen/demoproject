@@ -11,3 +11,5 @@ app/config/parameters.yml
 web/generated-js
 web/uploads
 web/generated-css
+
+installer.rb

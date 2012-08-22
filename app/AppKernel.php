@@ -19,52 +19,49 @@ class AppKernel extends Kernel
             new JMS\AopBundle\JMSAopBundle(),
             new JMS\DiExtraBundle\JMSDiExtraBundle($this),
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
-
-            // KunstmaanAdminBundle
-            new FOS\UserBundle\FOSUserBundle(),
-            new Knp\Bundle\MenuBundle\KnpMenuBundle(),
-            new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
-            new Kunstmaan\AdminBundle\KunstmaanAdminBundle(),
-            // KunstmaanMediaBundle
-            new Liip\ImagineBundle\LiipImagineBundle(),
-            new Knp\Bundle\GaufretteBundle\KnpGaufretteBundle(),
-            new Kunstmaan\MediaBundle\KunstmaanMediaBundle(),
-            // KunstmaanPagePartBundle
-            new Kunstmaan\PagePartBundle\KunstmaanPagePartBundle(),
-            // KunstmaanMediaPagePartBundle
-            new Kunstmaan\MediaPagePartBundle\KunstmaanMediaPagePartBundle(),
-            // KunstmaanFormBundle
-            new Kunstmaan\FormBundle\KunstmaanFormBundle(),
-            // KunstmaanAdminListBundle
-            new Kunstmaan\AdminListBundle\KunstmaanAdminListBundle(),
-            // KunstmaanAdminNodeBundle
-            new Kunstmaan\AdminNodeBundle\KunstmaanAdminNodeBundle(),
-            // KunstmaanViewBundle
-            new Kunstmaan\ViewBundle\KunstmaanViewBundle(),
-            // KunstmaanSearchBundle
-            new FOQ\ElasticaBundle\FOQElasticaBundle(),
-            new Kunstmaan\SearchBundle\KunstmaanSearchBundle(),
-            // KunstmaanGeneratorBundle
-            new Kunstmaan\GeneratorBundle\KunstmaanGeneratorBundle(),
-            // KunstmaanSentryBundle
-            new Kunstmaan\SentryBundle\KunstmaanSentryBundle(),
-            // LiipMonitorBundle & LiipMonitorExtraBundle
-            new Liip\MonitorBundle\LiipMonitorBundle(),
-            new Liip\MonitorExtraBundle\LiipMonitorExtraBundle(),
-            // LiipCacheControlBundle
-            new Liip\CacheControlBundle\LiipCacheControlBundle(),
-
         );
-
-        if (in_array($this->getEnvironment(), array('prod'))){
-            // KunstmaanSentryBundle
-            $bundles[] = new Kunstmaan\SentryBundle\KunstmaanSentryBundle();
-        }
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
+        }
+
+        // KunstmaanAdminBundle
+        $bundles[] = new FOS\UserBundle\FOSUserBundle(),
+        $bundles[] = new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+        $bundles[] = new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
+        $bundles[] = new Kunstmaan\AdminBundle\KunstmaanAdminBundle(),
+        // KunstmaanMediaBundle
+        $bundles[] = new Liip\ImagineBundle\LiipImagineBundle(),
+        $bundles[] = new Knp\Bundle\GaufretteBundle\KnpGaufretteBundle(),
+        $bundles[] = new Kunstmaan\MediaBundle\KunstmaanMediaBundle(),
+        // KunstmaanPagePartBundle
+        $bundles[] = new Kunstmaan\PagePartBundle\KunstmaanPagePartBundle(),
+        // KunstmaanMediaPagePartBundle
+        $bundles[] = new Kunstmaan\MediaPagePartBundle\KunstmaanMediaPagePartBundle(),
+        // KunstmaanFormBundle
+        $bundles[] = new Kunstmaan\FormBundle\KunstmaanFormBundle(),
+        // KunstmaanAdminListBundle
+        $bundles[] = new Kunstmaan\AdminListBundle\KunstmaanAdminListBundle(),
+        // KunstmaanAdminNodeBundle
+        $bundles[] = new Kunstmaan\AdminNodeBundle\KunstmaanAdminNodeBundle(),
+        // KunstmaanViewBundle
+        $bundles[] = new Kunstmaan\ViewBundle\KunstmaanViewBundle(),
+        // KunstmaanSearchBundle
+        $bundles[] = new FOQ\ElasticaBundle\FOQElasticaBundle(),
+        $bundles[] = new Kunstmaan\SearchBundle\KunstmaanSearchBundle(),
+        // KunstmaanGeneratorBundle
+        $bundles[] = new Kunstmaan\GeneratorBundle\KunstmaanGeneratorBundle(),
+        // LiipMonitorBundle & LiipMonitorExtraBundle
+        $bundles[] = new Liip\MonitorBundle\LiipMonitorBundle(),
+        $bundles[] = new Liip\MonitorExtraBundle\LiipMonitorExtraBundle(),
+        // LiipCacheControlBundle
+        $bundles[] = new Liip\CacheControlBundle\LiipCacheControlBundle(),
+
+        if (in_array($this->getEnvironment(), array('prod'))){
+            // KunstmaanSentryBundle
+            $bundles[] = new Kunstmaan\SentryBundle\KunstmaanSentryBundle();
         }
 
         return $bundles;

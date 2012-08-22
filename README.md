@@ -112,46 +112,8 @@ git commit -a -m "Symfony base install"
 
 ```bash
 gem install json
-ruby -e "require 'open-uri'; eval open('https://raw.github.com/gist/3423884/sandboxinstaller.rb').read" install-bundles composer.json
+ruby -e "require 'open-uri'; eval open('https://raw.github.com/gist/3423884/sandboxinstaller.rb').read" install-bundles composer.json app/AppKernel.php
 php composer.phar update
-```
-
-and the following to AppKernel.php
-
-```php
-            // KunstmaanAdminBundle
-            new FOS\UserBundle\FOSUserBundle(),
-            new Knp\Bundle\MenuBundle\KnpMenuBundle(),
-            new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
-            new Kunstmaan\AdminBundle\KunstmaanAdminBundle(),
-            // KunstmaanMediaBundle
-            new Liip\ImagineBundle\LiipImagineBundle(),
-            new Knp\Bundle\GaufretteBundle\KnpGaufretteBundle(),
-            new Kunstmaan\MediaBundle\KunstmaanMediaBundle(),
-            // KunstmaanPagePartBundle
-            new Kunstmaan\PagePartBundle\KunstmaanPagePartBundle(),
-            // KunstmaanMediaPagePartBundle
-            new Kunstmaan\MediaPagePartBundle\KunstmaanMediaPagePartBundle(),
-            // KunstmaanFormBundle
-            new Kunstmaan\FormBundle\KunstmaanFormBundle(),
-            // KunstmaanAdminListBundle
-            new Kunstmaan\AdminListBundle\KunstmaanAdminListBundle(),
-            // KunstmaanAdminNodeBundle
-            new Kunstmaan\AdminNodeBundle\KunstmaanAdminNodeBundle(),
-            // KunstmaanViewBundle
-            new Kunstmaan\ViewBundle\KunstmaanViewBundle(),
-            // KunstmaanSearchBundle
-            new FOQ\ElasticaBundle\FOQElasticaBundle(),
-            new Kunstmaan\SearchBundle\KunstmaanSearchBundle(),
-            // KunstmaanGeneratorBundle
-            new Kunstmaan\GeneratorBundle\KunstmaanGeneratorBundle(),
-            // KunstmaanSentryBundle
-            new Kunstmaan\SentryBundle\KunstmaanSentryBundle(),
-            // LiipMonitorBundle & LiipMonitorExtraBundle
-            new Liip\MonitorBundle\LiipMonitorBundle(),
-            new Liip\MonitorExtraBundle\LiipMonitorExtraBundle(),
-            // LiipCacheControlBundle
-            new Liip\CacheControlBundle\LiipCacheControlBundle(),
 ```
 
 parameters.yml (Don't forget to change the searchindexname, sentry.dsn and websitetitle param)
@@ -248,7 +210,7 @@ parameters:
     # db_id_col: session_id
     # db_data_col: session_value
     # db_time_col: session_time
-    
+
 stof_doctrine_extensions:
     default_locale: nl
     translation_fallback: true
