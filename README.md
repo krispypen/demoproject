@@ -76,6 +76,7 @@ chmod a+x param
 ```bash
 echo ".idea" >> .gitignore
 echo "web/generated-js" >> .gitignore
+echo "web/generated-css" >> .gitignore
 echo "web/uploads" >> .gitignore
 rm -Rf .git
 git init
