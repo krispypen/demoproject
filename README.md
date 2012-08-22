@@ -69,6 +69,10 @@ echo "app/config/parameters.yml" >> .gitignore
 echo "$(curl -fsSL https://raw.github.com/gist/c1125c1f97c76dd6cf99/param)" > param
 chmod a+x param
 ./param encode
+
+echo "$(curl -fsSL https://raw.github.com/gist/3423648/fullreload)" > fullreload
+chmod a+x fullreload
+
 ```
 
 # Use the apcClassLoader
@@ -435,4 +439,3 @@ security:
 ```
 
 Run schema update and load fixtures
-
