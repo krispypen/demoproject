@@ -83,23 +83,10 @@ git commit -a -m "Symfony base install"
 
 # Adding bundles
 
-Add the following to your composer.json and run ```php composer.phar update``
-
-```json
-        "kunstmaan/admin-bundle": "2.0.x-dev",
-        "kunstmaan/media-bundle": "2.0.x-dev",
-        "kunstmaan/pagepart-bundle": "2.0.x-dev",
-        "kunstmaan/media-pagepart-bundle": "2.0.x-dev",
-        "kunstmaan/form-bundle": "2.0.x-dev",
-        "kunstmaan/adminlist-bundle": "2.0.x-dev",
-        "kunstmaan/adminnode-bundle": "2.0.x-dev",
-        "kunstmaan/view-bundle": "2.0.x-dev",
-        "kunstmaan/search-bundle": "2.0.x-dev",
-        "kunstmaan/generator-bundle": "2.0.x-dev",
-        "kunstmaan/sentry-bundle": "dev-master",
-        "liip/monitor-bundle": "dev-master",
-        "liip/monitor-extra-bundle": "dev-master",
-        "liip/cache-control-bundle": "dev-master"
+```bash
+gem install json
+ruby -e "require 'open-uri'; eval open('https://raw.github.com/gist/3423884/sandboxinstaller.rb').read" install-bundles composer.json
+php composer.phar update
 ```
 
 and the following to AppKernel.php
