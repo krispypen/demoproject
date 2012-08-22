@@ -75,6 +75,8 @@ chmod a+x param
 
 ```bash
 echo ".idea" >> .gitignore
+echo "web/generated-js" >> .gitignore
+echo "web/uploads" >> .gitignore
 rm -Rf .git
 git init
 git add .
