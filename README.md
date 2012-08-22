@@ -107,72 +107,20 @@ git commit -a -m "Symfony base install"
 
 # Adding bundles
 
-Add the following to your composer.json and run ```php composer.phar update``
-
-```json
-        "kunstmaan/admin-bundle": "2.0.x-dev",
-        "kunstmaan/media-bundle": "2.0.x-dev",
-        "kunstmaan/pagepart-bundle": "2.0.x-dev",
-        "kunstmaan/media-pagepart-bundle": "2.0.x-dev",
-        "kunstmaan/form-bundle": "2.0.x-dev",
-        "kunstmaan/adminlist-bundle": "2.0.x-dev",
-        "kunstmaan/adminnode-bundle": "2.0.x-dev",
-        "kunstmaan/view-bundle": "2.0.x-dev",
-        "kunstmaan/search-bundle": "2.0.x-dev",
-        "kunstmaan/generator-bundle": "2.0.x-dev",
-        "kunstmaan/sentry-bundle": "dev-master",
-        "liip/monitor-bundle": "dev-master",
-        "liip/monitor-extra-bundle": "dev-master",
-        "liip/cache-control-bundle": "dev-master"
+```bash
+gem install json
+ruby -e "require 'open-uri'; eval open('https://raw.github.com/gist/3423884/sandboxinstaller.rb').read" install-bundles composer.json app/AppKernel.php
+php composer.phar update
 ```
 
-and the following to AppKernel.php
-
-```php
-            // KunstmaanAdminBundle
-            new FOS\UserBundle\FOSUserBundle(),
-            new Knp\Bundle\MenuBundle\KnpMenuBundle(),
-            new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
-            new Kunstmaan\AdminBundle\KunstmaanAdminBundle(),
-            // KunstmaanMediaBundle
-            new Liip\ImagineBundle\LiipImagineBundle(),
-            new Knp\Bundle\GaufretteBundle\KnpGaufretteBundle(),
-            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
-            new Kunstmaan\MediaBundle\KunstmaanMediaBundle(),
-            // KunstmaanPagePartBundle
-            new Kunstmaan\PagePartBundle\KunstmaanPagePartBundle(),
-            // KunstmaanMediaPagePartBundle
-            new Kunstmaan\MediaPagePartBundle\KunstmaanMediaPagePartBundle(),
-            // KunstmaanFormBundle
-            new Kunstmaan\FormBundle\KunstmaanFormBundle(),
-            // KunstmaanAdminListBundle
-            new Kunstmaan\AdminListBundle\KunstmaanAdminListBundle(),
-            // KunstmaanAdminNodeBundle
-            new Kunstmaan\AdminNodeBundle\KunstmaanAdminNodeBundle(),
-            // KunstmaanViewBundle
-            new Kunstmaan\ViewBundle\KunstmaanViewBundle(),
-            // KunstmaanSearchBundle
-            new FOQ\ElasticaBundle\FOQElasticaBundle(),
-            new Kunstmaan\SearchBundle\KunstmaanSearchBundle(),
-            // KunstmaanGeneratorBundle
-            new Kunstmaan\GeneratorBundle\KunstmaanGeneratorBundle(),
-            // KunstmaanSentryBundle
-            new Kunstmaan\SentryBundle\KunstmaanSentryBundle(),
-            // LiipMonitorBundle & LiipMonitorExtraBundle
-            new Liip\MonitorBundle\LiipMonitorBundle(),
-            new Liip\MonitorExtraBundle\LiipMonitorExtraBundle(),
-            // LiipCacheControlBundle
-            new Liip\CacheControlBundle\LiipCacheControlBundle(),
-```
-
-app/config/parameters.yml (Don't forget to change db name, user, password and requiredlocales in this file)
+app/config/parameters.yml (Don't forget to change the searchindexname, sentry.dsn and websitetitle param)
 
 ```yaml
     # KunstmaanSearchBundle
     searchport: 9200
     searchindexname: demoproject
     # KunstmaanSentryBundle
-    sentry.dsn: https://5f267019e884404c9ad6f600562ecae8:2ac17b2abef44446a92742e940002a0c@app.getsentry.com/2067
+    sentry.dsn: https://XXXXXXXX:XXXXXXXX@app.getsentry.com/XXXX
     # KunstmaanMediaBundle
     cdnpath: ""
     # KunstmaanViewBundle
@@ -316,7 +264,7 @@ parameters:
     # db_id_col: session_id
     # db_data_col: session_value
     # db_time_col: session_time
-    
+
 stof_doctrine_extensions:
     default_locale: nl
     translation_fallback: true
@@ -496,4 +444,4 @@ security:
         - { path: ^/([^/]*)/admin, role: ROLE_ADMIN }
 ```
 
-Run composer update and fullreload
+Run fullreload
